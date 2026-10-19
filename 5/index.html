@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступная карточка товара</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main>
+        <h1>Каталог товаров</h1>
+
+        <!-- Область для объявлений скринридерам -->
+        <div
+            aria-live="polite"
+            class="visually-hidden"
+            id="live-region"
+        ></div>
+
+        <!-- Карточка товара -->
+        <article
+            class="card"
+            aria-labelledby="product-title"
+            aria-describedby="product-desc"
+        >
+            <!-- Декоративное изображение -->
+            <div class="card__image-wrapper">
+                <img
+                    src="./images/product.jpeg"
+                    alt=""
+                    aria-hidden="true"
+                    class="card__image"
+                >
+
+                <span
+                    class="card__badge"
+                    aria-hidden="true"
+                >
+                    Хит
+                </span>
+            </div>
+
+            <!-- Контентная часть -->
+            <div class="card__content">
+                <h2
+                    class="card__title"
+                    id="product-title"
+                >
+                    Беспроводные наушники
+                </h2>
+
+                <p
+                    class="card__description"
+                    id="product-desc"
+                >
+                    Отличный звук, шумоподавление и до 30 часов
+                    работы без подзарядки.
+                </p>
+
+                <!-- Цена -->
+                <p
+                    class="card__price"
+                    aria-label="Цена товара: 7990 рублей"
+                >
+                    <span class="card__price-value">
+                        7 990 ₽
+                    </span>
+                </p>
+
+                <!-- Кнопка добавления в корзину -->
+                <button
+                    class="card__button button button--primary"
+                    type="button"
+                    aria-label="Добавить Беспроводные наушники в корзину"
+                    id="btnprime"
+                    onclick="addToCart()"
+                >
+                    <span
+                        class="button__icon"
+                        aria-hidden="true"
+                    >
+                        🛒
+                    </span>
+
+                    <span class="button__text">
+                        В корзину
+                    </span>
+                </button>
+
+                <!-- Кнопка «Подробнее» -->
+                <a
+                    href="#"
+                    class="card__link link"
+                    aria-label="Подробнее о Беспроводных наушниках"
+                >
+                    Подробнее
+                </a>
+            </div>
+        </article>
+
+        <article
+        aria-labelledby="formheader"
+        aria-describedby="inp_lbl"
+        >
+            <h2 id="formheader">Форма</h2>
+            <form>
+                <h4>Включить поле ввода текста?</h4>
+                <input type="radio" name="is_text" value="on" class="first" id="rt1" onclick="enableInp()">
+                <label for="rt1" aria-label="Включить поле ввода">Да</label>
+                <input type="radio" name="is_text" value="off" id="rt2" onclick="disableInp()">
+                <label for="rt2" aria-label="Выключить поле ввода">Нет</label>
+
+                <input type="text" id="switchable_input" placeholder="Поле включено">
+                <label for="switchable_input" id="inp_lbl" aria-live="polite">Поле ввода включено</label>
+            </form>
+        </article>
+        
+
+    </main>
+
+    <script>
+        const switchInp = document.getElementById('switchable_input');
+        const radioOn = document.getElementById('rt1');
+        const radioOff = document.getElementById('rt2');
+        const isInpOn = document.getElementById('inp_lbl');
+
+        function addToCart() {
+            const btn = document.getElementById('btnprime')
+            const liveRegion = document.getElementById('live-region');
+            liveRegion.textContent = 'Товар добавлен в корзину';
+            btn.textContent = 'Товар добавлен в корзину';
+
+            // Очистка через 3 секунды
+            setTimeout(() => {
+                liveRegion.textContent = '';
+                btn.textContent = 'В корзину';
+            }, 3000);
+        }
+
+        function disableInp()
+        {
+            switchInp.setAttribute('disabled', 1);
+            switchInp.setAttribute('placeholder', 'Поле отключено')
+            isInpOn.textContent = "Поле ввода выключено";
+        }
+
+        function enableInp()
+        {
+            switchInp.removeAttribute('disabled');
+            switchInp.setAttribute('placeholder', 'Поле включено')
+            isInpOn.textContent = "Поле ввода включено";
+        }
+    </script>
+</body>
+</html>
